@@ -1,3 +1,6 @@
+# Disable Secrets in CI-test environments.
+<%= clear_secrets if ci_test %>
+
 pegasus_skip_asset_map: <%=ci_test%>
 netsim_enable_metrics: true
 stub_school_data: true
