@@ -1,5 +1,8 @@
 # Disable Secrets in CI-test environments.
-<%= clear_secrets if ci_test %>
+<% if ci_test -%>
+<%= clear_secrets %>
+db_writer: 'mysql://root@localhost/'
+<% end -%>
 
 pegasus_skip_asset_map: <%=ci_test%>
 netsim_enable_metrics: true
