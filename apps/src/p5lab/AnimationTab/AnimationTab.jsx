@@ -5,7 +5,7 @@ import Radium from 'radium';
 import {connect} from 'react-redux';
 import color from '@cdo/apps/util/color';
 import AnimationPicker from '../AnimationPicker/AnimationPicker';
-import GameLabVisualizationHeader from '../GameLabVisualizationHeader';
+import GameLabVisualizationHeader from './GameLabVisualizationHeader';
 import {setColumnSizes} from './animationTabModule';
 import AnimationList from './AnimationList';
 import ResizablePanes from '@cdo/apps/templates/ResizablePanes';

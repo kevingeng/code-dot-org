@@ -1,13 +1,13 @@
 /** @file Row of controls above the visualization. */
 import PropTypes from 'prop-types';
 import React from 'react';
-import {changeInterfaceMode} from './actions';
+import {changeInterfaceMode} from '../actions';
 import {connect} from 'react-redux';
-import {GameLabInterfaceMode} from './constants';
+import {GameLabInterfaceMode} from '../constants';
 import msg from '@cdo/locale';
 import ToggleGroup from '@cdo/apps/templates/ToggleGroup';
 import styleConstants from '@cdo/apps/styleConstants';
-import {allowAnimationMode} from './stateQueries';
+import {allowAnimationMode} from '../stateQueries';
 
 const styles = {
   main: {
