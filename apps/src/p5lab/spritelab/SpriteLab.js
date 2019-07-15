@@ -15,10 +15,6 @@ SpriteLab.prototype = Object.create(P5Lab.prototype);
 
 module.exports = SpriteLab;
 
-SpriteLab.prototype.reset = function() {
-  spriteUtils.reset();
-};
-
 SpriteLab.prototype.preview = function() {
   if (this.gameLabP5.p5decrementPreload) {
     // preload is still in progress. This happens sometimes on initial page load because both the Gamelab reset
