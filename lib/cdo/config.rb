@@ -25,7 +25,7 @@ module Cdo
     # Resolves dynamic config self-references by re-rendering + merging until result is unchanged.
     def load_configuration(*sources)
       config = nil
-      i = 6
+      i = 8
       table = @table
       while config != (config = render(*sources))
         raise "Can't resolve config (circular dependency?)" if (i -= 1).zero?
