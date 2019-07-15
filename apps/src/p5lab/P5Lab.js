@@ -718,9 +718,6 @@ P5Lab.prototype.startTickTimer = function() {
  */
 P5Lab.prototype.resetHandler = function(ignore) {
   this.reset();
-  if (this.isSpritelab) {
-    this.preview();
-  }
 };
 
 /**

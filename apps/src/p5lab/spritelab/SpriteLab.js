@@ -40,3 +40,9 @@ SpriteLab.prototype.preview = function() {
     this.gameLabP5.setLoop(false);
   }
 };
+
+SpriteLab.prototype.resetHandler = function(ignore) {
+  this.reset();
+  spriteUtils.reset();
+  this.preview();
+};
