@@ -2,6 +2,7 @@
 <% if ci_test -%>
 <%= clear_secrets %>
 db_writer: 'mysql://root@localhost/'
+poste_secret: not a real secret
 <% end -%>
 
 pegasus_skip_asset_map: <%=ci_test%>
