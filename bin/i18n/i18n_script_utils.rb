@@ -138,6 +138,31 @@ def redact(source, dest, plugins=[], format='md')
   end
 end
 
+def redact_level_file(source_path)
+  return unless File.exist? source_path
+  source_data = JSON.load(File.open(source_path))
+  return if source_data.blank?
+
+  redactable_data = source_data.map do |level_url, i18n_strings|
+    [level_url, select_redactable(i18n_strings)]
+  end.to_h
+
+  backup_path = source_path.sub("source", "original")
+  FileUtils.mkdir_p File.dirname(backup_path)
+  File.open(backup_path, "w") do |file|
+    file.write(JSON.pretty_generate(redactable_data))
+  end
+
+  stdout, _status = Open3.capture2(
+    "bin/i18n/node_modules/.bin/redact -p #{plugins_to_arg(['blockly'])}",
+    stdin_data: JSON.generate(redactable_data)
+  )
+  redacted_data = JSON.parse(stdout)
+  File.open(source_path, 'w') do |source_file|
+    source_file.write(JSON.pretty_generate(source_data.deep_merge(redacted_data)))
+  end
+end
+
 # This function currently looks for
 # 1. Translations with malformed redaction syntax, i.e. [] [0] (note the space)
 # 2. Translations with similarly malformed markdown, i.e. [link] (example.com)

@@ -67,7 +67,7 @@ def restore_redacted_files
       $stdout.flush
 
       if original_path.include? "course_content"
-        restore_course_content(original_path, translated_path, translated_path)
+        restore_course_content(original_path, translated_path, translated_path, ['blockly'])
       elsif original_path == 'i18n/locales/original/dashboard/blocks.yml'
         restore(original_path, translated_path, translated_path, ['blockfield'], 'txt')
       else
