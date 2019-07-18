@@ -19,17 +19,17 @@ import BlocklyModeErrorHandler from '@cdo/apps/BlocklyModeErrorHandler';
 var gamelabMsg = require('@cdo/gamelab/locale');
 var spritelabMsg = require('@cdo/spritelab/locale');
 import CustomMarshalingInterpreter from '@cdo/apps/lib/tools/jsinterpreter/CustomMarshalingInterpreter';
-var apiJavascript = require('./apiJavascript');
+var apiJavascript = require('./gamelab/apiJavascript');
 var consoleApi = require('@cdo/apps/consoleApi');
 var utils = require('@cdo/apps/utils');
-var dropletConfig = require('./dropletConfig');
+var dropletConfig = require('./gamelab/dropletConfig');
 var JSInterpreter = require('@cdo/apps/lib/tools/jsinterpreter/JSInterpreter');
 import * as apiTimeoutList from '@cdo/apps/lib/util/timeoutList';
 var JsInterpreterLogger = require('@cdo/apps/JsInterpreterLogger');
 var GameLabP5 = require('./GameLabP5');
 var gameLabSprite = require('./GameLabSprite');
 var gameLabGroup = require('./GameLabGroup');
-var gamelabCommands = require('./commands');
+var gamelabCommands = require('./gamelab/commands');
 import {initializeSubmitHelper, onSubmitComplete} from '@cdo/apps/submitHelper';
 var dom = require('@cdo/apps/dom');
 import {initFirebaseStorage} from '@cdo/apps/storage/firebaseStorage';
@@ -53,12 +53,12 @@ import {
 } from '@cdo/apps/containedLevels';
 import {hasValidContainedLevelResult} from '@cdo/apps/code-studio/levels/codeStudioLevels';
 import {actions as jsDebugger} from '@cdo/apps/lib/tools/jsdebugger/redux';
-import {addConsoleMessage, clearConsole} from './textConsoleModule';
+import {addConsoleMessage, clearConsole} from './spritelab/textConsoleModule';
 import {captureThumbnailFromCanvas} from '@cdo/apps/util/thumbnail';
 import Sounds from '@cdo/apps/Sounds';
 import {TestResults, ResultType} from '@cdo/apps/constants';
 import {showHideWorkspaceCallouts} from '@cdo/apps/code-studio/callouts';
-import defaultSprites from './defaultSprites.json';
+import defaultSprites from './spritelab/defaultSprites.json';
 import wrap from './debugger/replay';
 import firehoseClient from '@cdo/apps/lib/util/firehose';
 import {
@@ -68,8 +68,8 @@ import {
   mark,
   measure
 } from '@cdo/apps/util/performance';
-import MobileControls from './MobileControls';
-import Exporter from './Exporter';
+import MobileControls from './gamelab/MobileControls';
+import Exporter from './gamelab/Exporter';
 import {
   expoGenerateApk,
   expoCheckApkBuild,

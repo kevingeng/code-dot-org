@@ -3,7 +3,7 @@ import $ from 'jquery';
 import animationListModule, {
   setInitialAnimationList
 } from '@cdo/apps/p5lab/animationListModule';
-import defaultSprites from '@cdo/apps/p5lab/defaultSprites.json';
+import defaultSprites from '@cdo/apps/p5lab/spritelab/defaultSprites.json';
 import initializeCodeMirror, {
   initializeCodeMirrorForJson
 } from '@cdo/apps/code-studio/initializeCodeMirror';

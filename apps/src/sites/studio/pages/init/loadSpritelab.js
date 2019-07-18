@@ -1,7 +1,7 @@
 import appMain from '@cdo/apps/appMain';
 import {singleton as studioApp} from '@cdo/apps/StudioApp';
 import SpriteLab from '@cdo/apps/p5lab/spritelab/SpriteLab';
-import blocks from '@cdo/apps/p5lab/blocks';
+import blocks from '@cdo/apps/p5lab/spritelab/blocks';
 import skins from '@cdo/apps/p5lab/skins';
 import levels from '@cdo/apps/p5lab/levels';
 
