@@ -10,6 +10,7 @@ require 'fileutils'
 require 'json'
 
 require_relative 'i18n_script_utils'
+require_relative 'redact_restore_utils'
 
 I18N_SOURCE_DIR = "i18n/locales/source"
 
@@ -17,7 +18,7 @@ def sync_in
   localize_level_content
   localize_block_content
   puts "Copying source files"
-  run_bash_script "bin/i18n-codeorg/in.sh"
+  I18nScriptUtils.run_bash_script "bin/i18n-codeorg/in.sh"
   redact_level_content
   redact_block_content
 end
@@ -98,7 +99,7 @@ def localize_level_content
       script_strings = {}
       script.script_levels.each do |script_level|
         level = script_level.oldest_active_level
-        url = get_level_url_key(script, level)
+        url = I18nScriptUtils.get_level_url_key(script, level)
         script_strings[url] = get_i18n_strings(level)
 
         # extract block category strings; although these are defined for each
@@ -162,7 +163,7 @@ def localize_block_content
   end
 
   File.open("dashboard/config/locales/blocks.en.yml", "w+") do |f|
-    f.write(to_crowdin_yaml({"en" => {"data" => {"blocks" => blocks}}}))
+    f.write(I18nScriptUtils.to_crowdin_yaml({"en" => {"data" => {"blocks" => blocks}}}))
   end
 end
 
@@ -194,7 +195,25 @@ def redact_level_content
   puts "Redacting level content"
 
   Dir.glob(File.join(I18N_SOURCE_DIR, "course_content/**/*.json")).each do |source_path|
-    redact_level_file(source_path)
+    next unless File.exist? source_path
+    source_data = JSON.load(File.open(source_path))
+    next if source_data.blank?
+
+    redactable_data = source_data.map do |level_url, i18n_strings|
+      [level_url, select_redactable(i18n_strings)]
+    end.to_h
+
+    backup_path = source_path.sub("source", "original")
+    FileUtils.mkdir_p File.dirname(backup_path)
+    File.open(backup_path, "w") do |file|
+      file.write(JSON.pretty_generate(redactable_data))
+    end
+
+    redacted_data = RedactRestoreUtils.redact_data(redactable_data, ['blockly'])
+
+    File.open(source_path, 'w') do |source_file|
+      source_file.write(JSON.pretty_generate(source_data.deep_merge(redacted_data)))
+    end
   end
 end
 
@@ -205,7 +224,7 @@ def redact_block_content
   backup = source.sub("source", "original")
   FileUtils.mkdir_p(File.dirname(backup))
   FileUtils.cp(source, backup)
-  redact(source, source, ['blockfield'], 'txt')
+  RedactRestoreUtils.redact(source, source, ['blockfield'], 'txt')
 end
 
 sync_in if __FILE__ == $0
