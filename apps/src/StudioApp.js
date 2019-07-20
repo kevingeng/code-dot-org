@@ -2032,7 +2032,7 @@ StudioApp.prototype.configureDom = function(config) {
 
   // This prevents the app from extending offscreen when opening/closing the
   // toolbox (if the app has a collapsible toolbox).
-  container.style.overflow = 'hidden';
+  //container.style.overflow = 'hidden';
 
   if (config.readonlyWorkspace) {
     $(codeWorkspace).addClass('readonly');
