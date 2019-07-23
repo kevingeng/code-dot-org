@@ -3,12 +3,14 @@ require 'concurrent'
 require 'active_support/ordered_options'
 require 'active_support/core_ext/hash/keys'
 require 'cdo/lazy'
+require 'json'
 
 module Cdo
   # Interface for fetching secrets from AWS Secrets Manager.
   class Secrets
     CURRENT = "AWSCURRENT".freeze
     NOT_FOUND = Aws::SecretsManager::Errors::ResourceNotFoundException
+    EXISTS = Aws::SecretsManager::Errors::ResourceExistsException
 
     attr_accessor :logger
 
@@ -108,6 +110,23 @@ module Cdo
       self.class.to_s
     end
 
+    # Create/update a stored secret.
+    # @param key [String]
+    # @param value [String, Object]
+    def put(key, value)
+      value = value.to_json unless value.is_a?(String)
+      c = client.value!
+      c.create_secret(
+        name: key,
+        secret_string: value
+      )
+    rescue EXISTS
+      c.update_secret(
+        secret_id: key,
+        secret_string: value
+      )
+    end
+
     private
 
     # Call GetSecretValue for the provided key.
@@ -128,7 +147,7 @@ module Cdo
     # If +value+ is JSON, parse and wrap in ActiveSupport::OrderedOptions so
     # property-method lookup chains are possible (e.g., secrets.secret.key).
     # @param value[String]
-    # @return [ActiveSupport::OrderedOptions|String]
+    # @return [ActiveSupport::OrderedOptions, String]
     def parse_json(value)
       ActiveSupport::OrderedOptions[JSON.parse(value).symbolize_keys]
     rescue JSON::ParserError, TypeError

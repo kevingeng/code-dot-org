@@ -1,8 +1,36 @@
 require 'cdo/config'
+require 'cdo/lazy'
 
 module Cdo
-  # Extend Cdo::Config to process lazy-loaded secrets contained in special keys.
+  # Prepend this module to a Cdo::Config to process lazy-loaded secrets contained in special tags.
   module SecretsConfig
+    BASE_ENVS = [:staging, :test, :levelbuilder, :production]
+
+    # Generate a standard secret path from prefix and key.
+    def self.secret_path(prefix, key)
+      "#{prefix}/cdo/#{key}"
+    end
+
+    # Load a secrets-config hash from specified file.
+    # @param filename [String]
+    # @return [Hash<String, String|Hash>]
+    def self.load(filename)
+      results = {}
+      YAML.load_file(filename)&.each do |key, envs|
+        envs.each do |env, value|
+          if env == 'base'
+            BASE_ENVS.each do |base_env|
+              results[secret_path(base_env, key)] = value.dup
+            end
+          else
+            raise "Invalid env: #{env}" unless CDO.rack_envs.include?(env.to_sym)
+            results[secret_path(env, key)] = value
+          end
+        end
+      end
+      results
+    end
+
     def freeze
       lazy_load_secrets!
       super
@@ -25,20 +53,18 @@ module Cdo
     def process_secrets!(config)
       return if config.nil?
       config.select {|_, v| v.is_a?(Secret)}.each do |key, secret|
-        secret.key ||= secret_path(env, key)
+        secret.key ||= SecretsConfig.secret_path(env, key)
       end
-    end
-
-    def secret_path(prefix, key)
-      "#{prefix}/cdo/#{key}"
     end
 
     # Resolve secret references to lazy-loaded values.
     def lazy_load_secrets!
-      self.cdo_secrets = nil
-      table.select {|_k, v| v.is_a?(Secret)}.each do |key, secret|
+      self.cdo_secrets = Cdo.lazy do
         require 'cdo/secrets'
-        cdo_secrets = self.cdo_secrets ||= Cdo::Secrets.new(logger: log)
+        Cdo::Secrets.new(logger: log)
+      end
+
+      table.select {|_k, v| v.is_a?(Secret)}.each do |key, secret|
         table[key] = cdo_secrets.lazy(secret.key, raise_not_found: true)
         define_singleton_method(key) do
           # Replace lazy references to the underlying object on first access,

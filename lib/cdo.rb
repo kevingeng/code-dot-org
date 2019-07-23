@@ -132,7 +132,7 @@ module Cdo
     end
 
     def rack_env?(env)
-      rack_env.to_sym == env.to_sym
+      rack_env&.to_sym == env.to_sym
     end
 
     # Sets the slogger to use in a test.

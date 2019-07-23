@@ -14,10 +14,12 @@ dashboard_secret_key_base: not a secret
 db_writer: 'mysql://root@localhost/'
 <% end -%>
 
+db_cluster_id: test-cluster
 pegasus_skip_asset_map: <%=ci_test%>
 netsim_enable_metrics: true
 stub_school_data: true
 daemon: true
+use_pusher: true
 
 # test environment should use precompiled, minified, digested assets like production,
 # unless it's being used for unit tests. This logic should be kept in sync with

@@ -137,7 +137,7 @@ google_safe_browsing_key: !Secret
 crowdin_codeorg_api_key: !Secret
 
 # Azure Content Moderator
-azure_content_moderation_endpoint: !Secret
+azure_content_moderation_endpoint: https://eastus.api.cognitive.microsoft.com/contentmoderator
 azure_content_moderation_key:      !Secret
 
 # Credentials for SauceLabs.com, used for running selenium tests against
@@ -161,7 +161,7 @@ slack_endpoint_broken_links:    !Secret
 
 # Credentials/configuration for connecting to Firebase to use data blocks or data browser
 # in Applab.
-firebase_name:
+firebase_name: cdo-v3-<%=env%>
 firebase_secret: !Secret
 firebase_channel_id_suffix: ''
 firebase_max_channel_writes_per_15_sec: 300
@@ -204,11 +204,10 @@ aws_secret_key:
 
 freegeoip_host:
 geocoder_redis_url:
-solr_server:
+solr_server: localhost
 
 # Asynchronous queue-processor
 pd_workshop_queue_url:
-activity_queue_url:
 process_queues:
 
 # S3 bucket and (environment-specific) path-prefix configuration
@@ -250,10 +249,10 @@ dcdo_table_name:       dcdo_<%=env%>
 gatekeeper_table_name: gatekeeper_<%=env%>
 
 # Poste (internal transactional email processing framework)
-poste_host: 'localhost.code.org:3000'
+poste_host: <%= code_org_url.sub('//', '') %>
 poste_attachment_dir:
 poste_smtp_password: !Secret
-poste_smtp_server:   !Secret
+poste_smtp_server:   email-smtp.us-east-1.amazonaws.com
 poste_smtp_user:     !Secret
 poste_secret:        !Secret
 
@@ -283,7 +282,7 @@ app_servers: {}
 rack_mini_profiler_enabled:
 https_development:
 default_scheme: '<%=(env == 'development') || ci ? 'http:' : 'https:'%>'
-allowed_iframe_ancestors:
+allowed_iframe_ancestors: http://*.disney.com http://*.diznee.net <%=pegasus_hostname%> <%=dashboard_hostname%>
 skip_locales:
 secret_pictures_csv:
 no_https_store:
@@ -425,15 +424,12 @@ build_blockly_core:
 build_blockly: false
 geocoder_read_replica_1:
 geocoder_read_replica_2:
-browserstack_username:
-browserstack_authkey:
 dashboard_powerschool_key:
 dashboard_powerschool_secret:
 x-dashboard_twitter_key:
 x-dashboard_twitter_secret:
 ga_service_account_email:
 ga_api_key:
-ga_api_secret:
 hipchat_secret:
 indiegogo_api_token:
 localize_blockly: true
