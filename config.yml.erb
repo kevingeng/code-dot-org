@@ -76,14 +76,14 @@ recaptcha_secret_key: !Secret
 
 # Logentries (aka 'slog')
 logentries_secret: !Secret
-slog_token: !Secret
+slog_token:
 
 # Twilio
 twilio_auth:               !Secret
 twilio_auth_test:          !Secret
 twilio_messaging_service:  !Secret
-twilio_phone_test_forward: !Secret
-twilio_phone_test_to:      !Secret
+twilio_phone_test_forward:
+twilio_phone_test_to:
 twilio_sid:                !Secret
 twilio_sid_test:           !Secret
 
@@ -96,14 +96,14 @@ jotform_min_dates:
 lti_credentials: !Secret
 
 # Mimeo
-mimeo_api: !Secret
+mimeo_api:
 
 # PagerDuty
 pagerduty_token: !Secret
 
 # Pardot
-pardot_password: !Secret
-pardot_user_key: !Secret
+pardot_password:
+pardot_user_key:
 pardot_username:
 
 # Honeybadger
@@ -121,43 +121,43 @@ webpurify_key: !Secret
 
 # Github
 github_access_token:   !Secret
-github_webhook_secret: !Secret
+github_webhook_secret:
 
 # Google API credentials (various)
 google_maps_client_id:    !Secret
-google_maps_api_key:      !Secret
+google_maps_api_key:
 google_maps_secret:       !Secret
-hoc_map_account:          !Secret
-hoc_map_table_id:         !Secret
+hoc_map_account:
+hoc_map_table_id:
 ga_account:               !Secret
 ga_profile_id:            !Secret
 google_safe_browsing_key: !Secret
 
 # Crowdin
-crowdin_codeorg_api_key: !Secret
+crowdin_codeorg_api_key:
 
 # Azure Content Moderator
 azure_content_moderation_endpoint: https://eastus.api.cognitive.microsoft.com/contentmoderator
-azure_content_moderation_key:      !Secret
+azure_content_moderation_key:
 
 # Credentials for SauceLabs.com, used for running selenium tests against
 # multiple browsers
-saucelabs_username: !Secret
-saucelabs_authkey:  !Secret
+saucelabs_username:
+saucelabs_authkey:
 
 # Credentials for applitools.com, used for running automated visual tests
 applitools_eyes_api_key:      !Secret
-applitools_eyes_api_key_view: !Secret
+applitools_eyes_api_key_view:
 
 # Slack API credentials
-slack_set_last_dtt_green_token: !Secret
-slack_start_build_token:        !Secret
+slack_set_last_dtt_green_token:
+slack_start_build_token:
 slack_endpoint:                 !Secret
 slack_token:                    !Secret
 slack_log_room:                 <%=env%>
 hip_chat_logging:               false
 # Logging endpoint used by broken link checker.
-slack_endpoint_broken_links:    !Secret
+slack_endpoint_broken_links:
 
 # Credentials/configuration for connecting to Firebase to use data blocks or data browser
 # in Applab.
@@ -180,14 +180,14 @@ pusher_application_secret: !Secret
 
 # Configuration options for Acapela-Group.com integration
 use_acapela:
-acapela_login:              !Secret
-acapela_storage_app:        !Secret
-acapela_storage_password:   !Secret
-acapela_ephemeral_app:      !Secret
-acapela_ephemeral_password: !Secret
+acapela_login:
+acapela_storage_app:
+acapela_storage_password:
+acapela_ephemeral_app:
+acapela_ephemeral_password:
 
 # Credentials for new relic logging. Used to log apps build times.
-new_relic_license_key: !Secret
+new_relic_license_key:
 newrelic_logging: false
 
 # Credentials for Google-federated AWS access.
@@ -242,7 +242,7 @@ netsim_shard_expiry_seconds: 7200
 # The Fusion Table ID for the census map shown at code.org/yourschool.  If this
 # is set to the ID for the production site, be careful not to run
 # update_census_map as it will overwrite that table.
-census_map_table_id: !Secret
+census_map_table_id: '1AUZYRjLMI5NiQsDeDBGFsOIFpL_rLGsnxNpSyR13'
 
 # DynamoDB table names for dcdo/gatekeeper
 dcdo_table_name:       dcdo_<%=env%>
@@ -271,7 +271,7 @@ cloudfront_key_pair_id: !Secret
 cloudfront_private_key: !Secret
 
 # Discourse configuration
-discourse_sso_secret: !Secret
+discourse_sso_secret:
 
 ### Application configuration defaults
 
@@ -288,7 +288,7 @@ secret_pictures_csv:
 no_https_store:
 expo_session_secret: !Secret
 firebase_debug:
-pd_teacher_application_list_secret_key: !Secret
+pd_teacher_application_list_secret_key:
 
 # Whether rake:build should rebuild the apps package
 build_apps: false
@@ -366,7 +366,7 @@ pegasus_port: 3000
 pegasus_unicorn_name: pegasus
 pegasus_workers: 8
 pegasus_skip_asset_map: false
-sinatra_session_secret: !Secret
+sinatra_session_secret:
 
 # Configures Pegasus `settings.read_only`, which affects some (legacy) routes. Not actively used(?)
 read_only: false
@@ -467,14 +467,14 @@ logs_bucket:
 
 ### Database configuration
 
-redshift_host: !Secret
-redshift_password: !Secret
+redshift_host:
+redshift_password:
 
 devinternal_db_writer: !Secret
 
 db_cluster_id:
 db_admin: !Secret
-reporting_db_admin: !Secret
+reporting_db_admin:
 
 db_writer: !Secret
 reporting_db_writer: <%=db_writer%>
